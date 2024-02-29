@@ -61,16 +61,20 @@ def max(a,b):
 
 code_2 = "def max(a,b): if a>b: return a else return b"
 
+code_3 = "edyuasefghliahefklashfjk,sdhvjfdhgkjghxdjkhgfsjgjkhsdgjh"
 
 embeds_1 = pl_embedding(code_1, nl_tokens)
 embeds_2 = pl_embedding(code_2, nl_tokens)
+embeds_3 = pl_embedding(code_3, nl_tokens)
 # print(embeds_1)
 # print(embeds_2)
 # print(embeds_1.size())
 # print(embeds_2.size())
-c = padded_0_cos_similarity(embeds_1, embeds_2)
+c1 = padded_0_cos_similarity(embeds_1, embeds_2)
+c2 = padded_0_cos_similarity(embeds_1, embeds_3)
 
 
-print(c)
+print(f"cosine similarity between {code_1} and {code_2}: {c1} degrees")
+print(f"cosine similarity between {code_1} and {code_3}: {c2} degrees")
 # print(f"cosine similarity_norm:{torch.linalg.vector_norm(input=C)}")
 # print(f"cosine similarity size: {C.size()}")
