@@ -33,7 +33,8 @@ def padded_0_cos_similarity(vec1: torch.Tensor, vec2: torch.Tensor) -> float:
     difference = [dim1 - dim2 for dim1, dim2 in zip(dim_vec1, dim_vec2)]
     if difference[1] < 0:
         vec1 = F.pad(input=vec1, pad=(
-            0, 0, difference[1], 0), mode='constant', value=0)
+            0, 0, -1*difference[1], 0), mode='constant', value=0)
+
     elif difference[1] > 0:
         vec2 = F.pad(input=vec2, pad=(
             0, 0, difference[1], 0), mode='constant', value=0)
@@ -42,8 +43,8 @@ def padded_0_cos_similarity(vec1: torch.Tensor, vec2: torch.Tensor) -> float:
         None
 
     cos_vector = cos(vec1, vec2)
-    norm_cos = torch.linalg.vector_norm(input=cos_vector)
-    return norm_cos.item()
+    return torch.mean(cos_vector)
+    # return cos_vector
 
 
 natural_language = "return larger number"
@@ -61,20 +62,24 @@ def max(a,b):
 
 code_2 = "def max(a,b): if a>b: return a else return b"
 
-code_3 = "edyuasefghliahefklashfjk,sdhvjfdhgkjghxdjkhgfsjgjkhsdgjh"
+code_3 = "edyuasefghliahefklashfjk,sdhvjfdhgkjghxdjkhgfsjgjyypkhsdgjh"
+code_4 = "flyuraglkjfhg arsjkfhvaskbrhgskrjghvjkaernghvagvhkashgnvka    "
 
 embeds_1 = pl_embedding(code_1, nl_tokens)
 embeds_2 = pl_embedding(code_2, nl_tokens)
 embeds_3 = pl_embedding(code_3, nl_tokens)
+embeds_4 = pl_embedding(code_4, nl_tokens)
 # print(embeds_1)
 # print(embeds_2)
 # print(embeds_1.size())
 # print(embeds_2.size())
 c1 = padded_0_cos_similarity(embeds_1, embeds_2)
 c2 = padded_0_cos_similarity(embeds_1, embeds_3)
+c3 = padded_0_cos_similarity(embeds_3, embeds_4)
+c4 = padded_0_cos_similarity(embeds_1, embeds_1)
 
 
-print(f"cosine similarity between {code_1} and {code_2}: {c1} degrees")
-print(f"cosine similarity between {code_1} and {code_3}: {c2} degrees")
-# print(f"cosine similarity_norm:{torch.linalg.vector_norm(input=C)}")
-# print(f"cosine similarity size: {C.size()}")
+print(f"cosine similarity between {code_1} and {code_2}: {c1} ")
+print(f"cosine similarity between {code_1} and {code_3}: {c2} ")
+print(f"cosine similarity between {code_3} and {code_4}: {c3} ")
+print(f"cosine similarity between {code_1} and {code_1}: {c4} ")
