@@ -8,23 +8,8 @@ model = AutoModel.from_pretrained("microsoft/codebert-base")
 # pad it with 0's
 # pad it with 1's
 
-natural_language = "return larger number"
 
-code_1 = """
-    def max(a,b):
-        if a > b:
-            return a
-
-        return b
-
-
-            """
-
-code_2 = "def max(a,b): if a>b: return a else return b"
-
-
-def pl_embedding(pl: str, nl: str):
-    nl_tokens = tokenizer.tokenize(nl)
+def pl_embedding(pl: str, nl_tokens):
     pl_tokens = tokenizer.tokenize(pl)
 
     tokens = [tokenizer.cls_token]+nl_tokens + \
@@ -58,13 +43,33 @@ def padded_0_cos_similarity(vec1: torch.Tensor, vec2: torch.Tensor) -> float:
 
     cos_vector = cos(vec1, vec2)
     norm_cos = torch.linalg.vector_norm(input=cos_vector)
+    return norm_cos.item()
 
-    return norm_cos
+
+natural_language = "return larger number"
+nl_tokens = tokenizer.tokenize(natural_language)
+
+code_1 = """
+def max(a,b):
+    if a > b:
+        return a
+
+    return b
 
 
-embeds_1 = pl_embedding(code_1, natural_language)
-embeds_2 = pl_embedding(code_2, natural_language)
+        """
+
+code_2 = "def max(a,b): if a>b: return a else return b"
+
+
+embeds_1 = pl_embedding(code_1, nl_tokens)
+embeds_2 = pl_embedding(code_2, nl_tokens)
+# print(embeds_1)
+# print(embeds_2)
+# print(embeds_1.size())
+# print(embeds_2.size())
 c = padded_0_cos_similarity(embeds_1, embeds_2)
+
 
 print(c)
 # print(f"cosine similarity_norm:{torch.linalg.vector_norm(input=C)}")
