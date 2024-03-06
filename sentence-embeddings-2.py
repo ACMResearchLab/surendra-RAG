@@ -147,6 +147,14 @@ cos = torch.nn.CosineSimilarity(dim=1)
 #         cos_similarity = cos(tensors_2[x], tensors_2[y])
 #         print(cos_similarity)
 
+
+
+
+# TODO: see if this workss with query as well
+
+
+
+
 print(cos(tensors_2[0], tensors_2[1]))
 print(cos(tensors[1], tensors[3]))
 
