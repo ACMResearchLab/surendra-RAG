@@ -26,4 +26,20 @@ def sentensize(text: str) -> float:
     sentence_embeddings = mean_pooling(
         model_output, encoded_input['attention_mask'])
 
-    return sentence_embeddings[0]
+
+    return sentence_embeddings
+
+
+cos = torch.nn.CosineSimilarity(dim=1)
+
+
+def cos_sim(text1: str, text2: str):
+    embeddings1 = sentensize(text1)
+    embeddings2 = sentensize(text2)
+
+    tensors1 = torch.split(embeddings1, split_size_or_sections=1, dim=0)
+    tensors2 = torch.split(embeddings2, split_size_or_sections=1, dim=0)
+
+
+
+    return cos(tensors1[0], tensors2[0]).item()
