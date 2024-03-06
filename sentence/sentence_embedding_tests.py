@@ -1,37 +1,31 @@
 from main_sentence_embeddings import cos_sim
+from example_functions import functions
+import numpy as np
 
 
+# feel free to change
+query = "give me the slope intercept form of a function"
 
 
-m = "add two numbers"
+def rag(query: str, contexts: list):
 
-o = """
+    print(f"Query: {query}")
 
-def add_numbers(a, b):
-    return a + b
+    similaritys = []
+    for x in contexts:
+        similaritys.append(cos_sim(query, x))
 
-"""
+    a = np.array(similaritys)
 
-p = """
-def generate_random_sentence():
-    subjects = ['I', 'You', 'He', 'She', 'They']
-    verbs = ['run', 'jump', 'dance', 'sing', 'laugh']
-    objects = ['cat', 'dog', 'ball', 'tree', 'car']
+    # Find 4 top indexes
+    ind = np.argpartition(a, -4)[-4:]
 
-    subject = random.choice(subjects)
-    verb = random.choice(verbs)
-    obj = random.choice(objects)
+    # Sort them
+    ind = ind[np.argsort(a[ind])][::-1]
 
-    return f"{subject} {verb}s with a {obj}."
-
-"""
+    for i in ind:
+        print(contexts[i])
+        print(f"similarity val: {similaritys[i]}")
 
 
-
-
-
-print(cos_sim(m, p))
-print(cos_sim(m, o))
-
-
-
+rag(query, functions)
