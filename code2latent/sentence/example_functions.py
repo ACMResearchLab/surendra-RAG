@@ -8,7 +8,15 @@ functions = [
         else:
             return chr(int(s))
     ''',
-
+    '''def function6969(lst):
+    if not lst:
+        return None  # Handle empty list case
+    max_value = lst[0]
+    for num in lst:
+        if num > max_value:
+            max_value = num
+    return max_value
+    ''',
     '''
     def function2(lst):
         seen = set()

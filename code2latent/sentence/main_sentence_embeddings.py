@@ -1,9 +1,12 @@
 from transformers import AutoTokenizer, AutoModel
 import torch
 
+from sentence_transformers import SentenceTransformer
 
 tokenizer = AutoTokenizer.from_pretrained('mchochlov/codebert-base-cd-ft')
 model = AutoModel.from_pretrained('mchochlov/codebert-base-cd-ft')
+
+model_2 = SentenceTransformer('mchochlov/codebert-base-cd-ft')
 
 
 def mean_pooling(model_output, attention_mask):
@@ -26,11 +29,29 @@ def sentensize(text: str) -> float:
     sentence_embeddings = mean_pooling(
         model_output, encoded_input['attention_mask'])
 
-
     return sentence_embeddings
 
 
 cos = torch.nn.CosineSimilarity(dim=1)
+
+
+def library_thing(text: str, text2: str):
+
+    array = [text]
+    array2 = [text2]
+    embeddings1 = model_2.encode(array)
+    embeddings2 = model_2.encode(array2)
+
+    embeddings1 = torch.from_numpy(embeddings1)
+    embeddings2 = torch.from_numpy(embeddings2)
+   
+    # print(embeddings2)
+    # print(embeddings2.shape)
+    #cos(embeddings1, embeddings2)
+    # print(embeddings1)
+    # print(type(embeddings1))
+    return cos(embeddings1, embeddings2).item()
+
 
 
 def cos_sim(text1: str, text2: str):
@@ -39,7 +60,5 @@ def cos_sim(text1: str, text2: str):
 
     tensors1 = torch.split(embeddings1, split_size_or_sections=1, dim=0)
     tensors2 = torch.split(embeddings2, split_size_or_sections=1, dim=0)
-
-
 
     return cos(tensors1[0], tensors2[0]).item()

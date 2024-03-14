@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: surendra-gemma-code2nl
+  labels:
+    k8s-app: surendra-gemma-code2nl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      k8s-app: surendra-gemma-code2nl
+  template:
+    metadata:
+      labels:
+        k8s-app: surendra-gemma-code2nl
+    spec:
+      containers:
+      - name: gpu-container
+        image: gitlab-registry.nrp-nautilus.io/prp/jupyter-stack/prp:latest
+        command: ["sh", "-c", "sleep infinity"]
+        volumeMounts:
+        - mountPath: /pvc-surendra
+          name: tutorial-volume-surendra
+        resources:
+          limits:
+            nvidia.com/gpu: "1"
+            memory: "30G"
+            cpu: "4"
+          requests:
+            nvidia.com/gpu: "1"
+            memory: "15G"
+            cpu: "4"
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: nvidia.com/gpu.product
+                operator: In
+                values:
+                - NVIDIA-GeForce-RTX-4090
+      volumes:
+        - name: tutorial-volume-surendra
+          persistentVolumeClaim:
+            claimName: tutorial-volume-surendra
