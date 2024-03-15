@@ -1,13 +1,22 @@
-
-# need to run this in nautilus lmao
-
 from transformers import AutoTokenizer, AutoModelForCausalLM
+# pip install accelerate
 
-tokenizer = AutoTokenizer.from_pretrained("google/gemma-7b")
-model = AutoModelForCausalLM.from_pretrained("google/gemma-7b")
+tokenizer = AutoTokenizer.from_pretrained("google/gemma-2b-it")
+model = AutoModelForCausalLM.from_pretrained("google/gemma-2b-it", device_map="auto",)
 
-input_text = "Write me a poem about Machine Learning."
-input_ids = tokenizer(input_text, return_tensors="pt")
+input_text = """
+convert this code into text and dont say anything else. dont print the query
 
-outputs = model.generate(**input_ids)
+import random as r
+
+def s():
+    return r.random()
+
+print(s())
+
+
+"""
+input_ids = tokenizer(input_text, return_tensors="pt" ).to("cuda")
+
+outputs = model.generate(**input_ids, max_length=100)
 print(tokenizer.decode(outputs[0]))

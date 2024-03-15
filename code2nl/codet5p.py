@@ -2,18 +2,13 @@
 from transformers import RobertaTokenizer, T5ForConditionalGeneration
 
 old_text = """
-def svg_to_image(string, size=None):
-    if isinstance(string, unicode):
-        string = string.encode('utf-8')
-        renderer = QtSvg.QSvgRenderer(QtCore.QByteArray(string))
-    if not renderer.isValid():
-        raise ValueError('Invalid SVG data.')
-    if size is None:
-        size = renderer.defaultSize()
-        image = QtGui.QImage(size, QtGui.QImage.Format_ARGB32)
-        painter = QtGui.QPainter(image)
-        renderer.render(painter)
-    return image
+
+import random as r
+
+def s():
+    return r.random()
+
+print(s())
 
 """
 
@@ -22,10 +17,12 @@ if __name__ == '__main__':
     model = T5ForConditionalGeneration.from_pretrained('Salesforce/codet5-base-multi-sum')
 
     text = """
-def dliauwhdialuwhdi():
-    word_list = ["apple", "banana", "orange", "grape", "kiwi"]
-    return random.choice(word_list)
+import random as r
 
+def s():
+    return r.random()
+
+print(s())
 
     """
 
