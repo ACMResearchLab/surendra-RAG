@@ -11,6 +11,11 @@ model.max_seq_length = 1024
 
 embeddings = model.encode([
     'How is the weather today?',
-    'What is the current weather like today?'
+    'What is the current weather like today?',
+    'what is wrong with you dude, i hate you',
+    'i love you pookie',
+    'p9ewf8ouyahofuhawoughfaisuhfisuzhfasehfilshifuhsaeilufszifh'
 ])
 print(cos_sim(embeddings[0], embeddings[1]))
+print(cos_sim(embeddings[2], embeddings[3]))
+print(cos_sim(embeddings[0], embeddings[4]))
