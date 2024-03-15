@@ -23,7 +23,8 @@ def convert_2_english(text: str):
 
     input_ids = tokenizer(text, return_tensors="pt").to("cuda")
 
-    outputs = model.generate(**input_ids, max_length=100)
+    outputs = model.generate(**input_ids, max_length=1000)
     english = tokenizer.decode(outputs[0])
 
+    print(english)
     return english

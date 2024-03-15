@@ -11,7 +11,7 @@ def _fE2jR5(lst):
     return [x for x in lst if x % 2 != 0] 
 """
 
-code2nl_rag.get_n_highest_similar_to(query, test_functions, 5, "codet5p")
+code2nl_rag.get_n_highest_similar_to(query, test_functions, 5, "gemma")
 
 # TODO: do this
 # code2lat_rag.get_n_highest_similar_to(

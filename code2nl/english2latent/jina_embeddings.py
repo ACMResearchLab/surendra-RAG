@@ -1,7 +1,7 @@
 from sentence_transformers import SentenceTransformer
 from sentence_transformers.util import cos_sim
 # from ..code2english import gemma, codet5p
-from ..code2english import codet5p
+from ..code2english import gemma, codet5p
 
 model = SentenceTransformer(
     "jinaai/jina-embeddings-v2-base-en",  # switch to en/zh for English or Chinese
@@ -19,9 +19,8 @@ def get_embeddings(text: str, model_name: str):
             english = codet5p.code_2_english(text)
             # print(english)
         case "gemma":
-            # english = gemma.convert_2_english(text)
-            print("gemma is only on big boy")
-            return
+            english = gemma.convert_2_english(text)
+            # print("gemma is only on big boy")
         case "codetrans":
             print("codeTrans is unsupported")
             return
