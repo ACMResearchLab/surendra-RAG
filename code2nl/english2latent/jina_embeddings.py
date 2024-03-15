@@ -17,7 +17,7 @@ def get_embeddings(text: str, model_name: str):
     match model_name:
         case "codet5p":
             english = codet5p.code_2_english(text)
-            print(english)
+            # print(english)
         case "gemma":
             # english = gemma.convert_2_english(text)
             print("gemma is only on big boy")
