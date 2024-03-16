@@ -2,7 +2,7 @@ from .english2latent import jina_embeddings
 import torch
 import heapq
 
-from .code2english import gemma, codet5p
+from .code2english import gemma, codet5p, gpt2
 
 from torch.nn import CosineSimilarity
 
@@ -30,8 +30,8 @@ def get_n_highest_similar_to(query: str, contexts: list, n: int, c2e_model_name:
             case "gemma":
                 english = gemma.convert_2_english(x)
                 # print("gemma is only on big boy")
-            case "codetrans":
-                print("codeTrans is unsupported")
+            case "gpt2":
+                english = gpt2.convert_2_english(x)
                 return
         context_english_descriptions.append(english)
     # print(
@@ -80,6 +80,8 @@ def get_n_highest_similar_to(query: str, contexts: list, n: int, c2e_model_name:
             print("unimplemented")
             return
 
+        case "gpt2":
+            english = gpt2.convert_2_english(x)
         case _:
             print("unimplemented")
             return
