@@ -41,19 +41,19 @@
 # tokenizer = AutoTokenizer
 # print(output)
 if __name__ == "__main__":
-from transformers import pipeline, set_seed
+    from transformers import pipeline, set_seed
 
-generator = pipeline('text-generation', model='gpt2')
+    generator = pipeline('text-generation', model='gpt2')
 
-set_seed(1)
-query = f"""
-    convert this to english 
+    set_seed(1)
+    query = f"""
+        convert this to english 
 
-    def _dH6fJ5(lst):
-    return sum(1 for x in lst if x > 0)
+        def _dH6fJ5(lst):
+        return sum(1 for x in lst if x > 0)
 
-    """
+        """
 
-x=generator(query, max_length=30, num_return_sequences=0)
- 
-print(x)
+    x=generator(query, max_length=30, num_return_sequences=0)
+     
+    print(x)
