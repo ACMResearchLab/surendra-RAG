@@ -33,7 +33,8 @@ def get_n_highest_similar_to(query: str, contexts: list, n: int, c2e_model_name:
             case "codetrans":
                 print("codeTrans is unsupported")
                 return
-
+    print(
+        f"length of english descriptions {len(context_english_descriptions)}")
     embeddings = []
     for x in context_english_descriptions:
         np_embedding = None
@@ -53,6 +54,8 @@ def get_n_highest_similar_to(query: str, contexts: list, n: int, c2e_model_name:
         ttensor_embedding = torch.from_numpy(np_embedding)
         embeddings.append(ttensor_embedding)
 
+    print(f"length of embeddings {len(embeddings)}")
+
     similarities = []
 
     query_embedding = None
@@ -70,7 +73,7 @@ def get_n_highest_similar_to(query: str, contexts: list, n: int, c2e_model_name:
             print("unimplemented")
             return
     query_embedding = torch.from_numpy(query_embedding)
-    print(query_embedding)
+    print(f"query embedding length {query_embedding}")
 
     for x in embeddings:
         similarities.append(cos(query_embedding, x).item())
