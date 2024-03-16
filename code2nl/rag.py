@@ -33,6 +33,7 @@ def get_n_highest_similar_to(query: str, contexts: list, n: int, c2e_model_name:
             case "codetrans":
                 print("codeTrans is unsupported")
                 return
+        context_english_descriptions.append(english)
     print(
         f"length of english descriptions {len(context_english_descriptions)}")
     embeddings = []
