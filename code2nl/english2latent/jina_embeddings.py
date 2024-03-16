@@ -14,4 +14,6 @@ model.max_seq_length = 1024
 
 def get_embeddings(text: str):
     embeddings = model.encode([text])
+    print(text)
+    print(embeddings)
     return embeddings
