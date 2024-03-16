@@ -34,8 +34,8 @@ def get_n_highest_similar_to(query: str, contexts: list, n: int, c2e_model_name:
                 print("codeTrans is unsupported")
                 return
         context_english_descriptions.append(english)
-    print(
-        f"length of english descriptions {len(context_english_descriptions)}")
+    # print(
+    #     f"length of english descriptions {len(context_english_descriptions)}")
     embeddings = []
     for x in context_english_descriptions:
         np_embedding = None
@@ -55,7 +55,7 @@ def get_n_highest_similar_to(query: str, contexts: list, n: int, c2e_model_name:
         ttensor_embedding = torch.from_numpy(np_embedding)
         embeddings.append(ttensor_embedding)
 
-    print(f"length of embeddings {len(embeddings)}")
+    # print(f"length of embeddings {len(embeddings)}")
 
     similarities = []
 
@@ -74,12 +74,12 @@ def get_n_highest_similar_to(query: str, contexts: list, n: int, c2e_model_name:
             print("unimplemented")
             return
     query_embedding = torch.from_numpy(query_embedding)
-    print(f"query embedding length {query_embedding}")
+    # print(f"query embedding length {query_embedding}")
 
     for x in embeddings:
         similarities.append(cos(query_embedding, x).item())
 
-    print(f"length of similarities {len(similarities)}")
+    # print(f"length of similarities {len(similarities)}")
 # Indices of N largest elements in list
 # using heapq.nlargest()
     res = [similarities.index(i) for i in heapq.nlargest(n, similarities)]
