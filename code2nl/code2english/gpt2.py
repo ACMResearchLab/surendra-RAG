@@ -56,6 +56,9 @@ if __name__ == "__main__":
 # Example usage
 
     query = """
+    convert the following code to english
+
+
     def DhuadaS(lst):
         count = 0
         for item in lst:
