@@ -41,18 +41,27 @@ from transformers import GPT2Tokenizer, GPT2LMHeadModel
 # print(output)
 if __name__ == "__main__":
 
-# Load pre-trained model and tokenizer
+    # Load pre-trained model and tokenizer
     tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
     model = GPT2LMHeadModel.from_pretrained("gpt2")
 
 # Define a function to generate a response from a query
     def generate_response(query, max_length=100):
         input_ids = tokenizer.encode(query, return_tensors="pt")
-        output = model.generate(input_ids, max_length=max_length, num_return_sequences=1)
+        output = model.generate(
+            input_ids, max_length=max_length, num_return_sequences=1)
         response = tokenizer.decode(output[0], skip_special_tokens=True)
         return response
 
 # Example usage
-    query = "How do I use Hugging Face GPT-2?"
+
+query = """
+def DhuadaS(lst):
+    count = 0
+    for item in lst:
+        if item > 0:
+            count += 1
+    return count
+"""
     response = generate_response(query)
     print(response)
