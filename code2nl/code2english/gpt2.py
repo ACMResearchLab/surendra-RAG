@@ -55,13 +55,13 @@ if __name__ == "__main__":
 
 # Example usage
 
-query = """
-def DhuadaS(lst):
-    count = 0
-    for item in lst:
-        if item > 0:
-            count += 1
-    return count
-"""
+    query = """
+    def DhuadaS(lst):
+        count = 0
+        for item in lst:
+            if item > 0:
+                count += 1
+        return count
+    """
     response = generate_response(query)
     print(response)
