@@ -56,9 +56,10 @@ def get_n_highest_similar_to(query: str, contexts: list, n: int, c2e_model_name:
     similarities = []
 
     query_embedding = None
+
     match e2l_model_name:
         case "jina":
-            x = jina_embeddings.get_embeddings(query)
+            query_embedding = jina_embeddings.get_embeddings(query)
 
         case "bge":
 
@@ -68,11 +69,12 @@ def get_n_highest_similar_to(query: str, contexts: list, n: int, c2e_model_name:
         case _:
             print("unimplemented")
             return
-    query_embedding = torch.from_numpy(x)
+    query_embedding = torch.from_numpy(query_embedding)
 
     for x in embeddings:
         similarities.append(cos(query_embedding, x).item())
 
+    print(len(similarities))
 # Indices of N largest elements in list
 # using heapq.nlargest()
     res = [similarities.index(i) for i in heapq.nlargest(n, similarities)]
