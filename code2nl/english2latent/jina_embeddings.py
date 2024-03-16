@@ -12,6 +12,6 @@ model = SentenceTransformer(
 model.max_seq_length = 1024
 
 
-def get_embeddings(text: str, model_name: str):
+def get_embeddings(text: str ):
     embeddings = model.encode([text])
     return embeddings

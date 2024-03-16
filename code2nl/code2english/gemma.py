@@ -33,6 +33,6 @@ def convert_2_english(text: str):
 
     english = strip_after_delimiter(english, delimiter).strip()
     
-    print(english)
-    print("NEW!!!!!!!!!!!!!!!!!1")
+    # print(english)
+    # print("NEW!!!!!!!!!!!!!!!!!1")
     return english
