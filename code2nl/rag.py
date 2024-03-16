@@ -68,7 +68,7 @@ def get_n_highest_similar_to(query: str, contexts: list, n: int, c2e_model_name:
         case _:
             print("unimplemented")
             return
-    query_embedding = torch.from_numpy(query_embedding)
+    query_embedding = torch.from_numpy(x)
 
     for x in embeddings:
         similarities.append(cos(query_embedding, x).item())
