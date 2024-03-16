@@ -2,6 +2,8 @@ from .english2latent import jina_embeddings
 import torch
 import heapq
 
+from .code2english import gemma, codet5p
+
 from torch.nn import CosineSimilarity
 
 cos = CosineSimilarity(dim=1, eps=1e-6)
@@ -14,18 +16,58 @@ between all of them and return the most similar functions
 '''
 
 
-def get_n_highest_similar_to(query: str, contexts: list, n: int, model_name: str):
-    embeddings = []
+def get_n_highest_similar_to(query: str, contexts: list, n: int, c2e_model_name: str, e2l_model_name):
+
+    context_english_descriptions = []
+    # TODO: get code 2 english
+
     for x in contexts:
-        np_embedding = jina_embeddings.get_embeddings(x, model_name)
+
+        match c2e_model_name:
+            case "codet5p":
+                english = codet5p.code_2_english(x)
+                # print(english)
+            case "gemma":
+                english = gemma.convert_2_english(x)
+                # print("gemma is only on big boy")
+            case "codetrans":
+                print("codeTrans is unsupported")
+                return
+
+    embeddings = []
+    for x in context_english_descriptions:
+        np_embedding = None
+        match e2l_model_name:
+            case "jina":
+                np_embedding = jina_embeddings.get_embeddings(x)
+
+            case "bge":
+
+                print("unimplemented")
+                return
+
+            case _:
+                print("unimplemented")
+                return
+
         ttensor_embedding = torch.from_numpy(np_embedding)
         embeddings.append(ttensor_embedding)
 
     similarities = []
 
-    query_embedding = torch.from_numpy(
-        jina_embeddings.get_embeddings(query, model_name))
+    match e2l_model_name:
+        case "jina":
+            x = jina_embeddings.get_embeddings(query)
 
+        case "bge":
+
+            print("unimplemented")
+            return
+
+        case _:
+            print("unimplemented")
+            return
+    query_embedding = torch.from_numpy(x)
     for x in embeddings:
         similarities.append(cos(query_embedding, x).item())
 

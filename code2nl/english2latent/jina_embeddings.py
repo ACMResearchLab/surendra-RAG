@@ -13,17 +13,5 @@ model.max_seq_length = 1024
 
 
 def get_embeddings(text: str, model_name: str):
-    english = None
-    match model_name:
-        case "codet5p":
-            english = codet5p.code_2_english(text)
-            # print(english)
-        case "gemma":
-            english = gemma.convert_2_english(text)
-            # print("gemma is only on big boy")
-        case "codetrans":
-            print("codeTrans is unsupported")
-            return
-
-    embeddings = model.encode([english])
+    embeddings = model.encode([text])
     return embeddings
