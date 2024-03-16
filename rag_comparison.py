@@ -7,7 +7,12 @@ from code2latent import rag as code2lat_rag
 from random_functions import test_functions
 
 query = """
-  take a list and return the number of items in that list that are greater than 0  
+def DhuadaS(lst):
+    count = 0
+    for item in lst:
+        if item > 0:
+            count += 1
+    return count
 """
 
 code2nl_rag.get_n_highest_similar_to(
