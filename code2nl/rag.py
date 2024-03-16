@@ -59,11 +59,21 @@ def get_n_highest_similar_to(query: str, contexts: list, n: int, c2e_model_name:
 
     similarities = []
 
-    query_embedding = None
+    query_2_english = None
+    match c2e_model_name:
+        case "codet5p":
+            query_2_english = codet5p.code_2_english(query)
+            # print(english)
+        case "gemma":
+            query_2_english = gemma.convert_2_english(query)
+            # print("gemma is only on big boy")
+        case "codetrans":
+            print("codeTrans is unsupported")
 
+    query_embedding = None
     match e2l_model_name:
         case "jina":
-            query_embedding = jina_embeddings.get_embeddings(query)
+            query_embedding = jina_embeddings.get_embeddings(query_2_english)
 
         case "bge":
 
