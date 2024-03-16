@@ -1,3 +1,4 @@
+from transformers import GPT2Tokenizer, GPT2LMHeadModel
 # from transformers import GPT2Tokenizer, GPT2Model
 # tokenizer = GPT2Tokenizer.from_pretrained('gpt2')
 # model = GPT2Model.from_pretrained('gpt2')
@@ -9,15 +10,13 @@
 #     if delimiter_index != -1:
 #         return s[delimiter_index + len(delimiter):]
 #     else:
-#         return s
-#
-# def convert_2_english(text: str):
+#         return s def convert_2_english(text: str):
 #
 #     text = f"""
 #     ONLY convert the following code into the semantic meaning, do NOT say anything else. Your response should be a 1 sentence summary, delimiter shoould not be anywhere in your response\n
-#    
+#
 #    CODE START
-#    {text} 
+#    {text}
 #     CODE END
 #
 #    {delimiter}
@@ -41,19 +40,19 @@
 # tokenizer = AutoTokenizer
 # print(output)
 if __name__ == "__main__":
-    from transformers import pipeline, set_seed
 
-    generator = pipeline('text-generation', model='gpt2')
+# Load pre-trained model and tokenizer
+    tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
+    model = GPT2LMHeadModel.from_pretrained("gpt2")
 
-    set_seed(1)
-    query = f"""
-        convert this to english 
+# Define a function to generate a response from a query
+    def generate_response(query, max_length=100):
+        input_ids = tokenizer.encode(query, return_tensors="pt")
+        output = model.generate(input_ids, max_length=max_length, num_return_sequences=1)
+        response = tokenizer.decode(output[0], skip_special_tokens=True)
+        return response
 
-        def _dH6fJ5(lst):
-        return sum(1 for x in lst if x > 0)
-
-        """
-
-    x=generator(query, max_length=30, num_return_sequences=0)
-     
-    print(x)
+# Example usage
+    query = "How do I use Hugging Face GPT-2?"
+    response = generate_response(query)
+    print(response)
