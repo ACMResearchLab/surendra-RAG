@@ -46,7 +46,7 @@ if __name__ == "__main__":
     model = GPT2LMHeadModel.from_pretrained("gpt2")
 
 # Define a function to generate a response from a query
-    def generate_response(query, max_length=100):
+    def generate_response(query, max_length=1000):
         input_ids = tokenizer.encode(query, return_tensors="pt")
         output = model.generate(
             input_ids, max_length=max_length, num_return_sequences=1)
